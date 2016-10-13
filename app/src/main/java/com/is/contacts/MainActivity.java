@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.is.contacts.base.BaseActivity;
+import com.is.contacts.presenter.ContactsPresenterImpl;
+import com.is.contacts.view.ContactsView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements ContactsView {
     @Bind(R.id.btn_synchronization)
     Button btnSynchronization;
     @Bind(R.id.activity_main)
@@ -31,6 +33,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.tv_contact)
     TextView tvContact;
     private Context mContext;
+    private ContactsPresenterImpl contactsPresenter;
     private List<Contacts> contactses;
 
     @Override
@@ -39,15 +42,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mContext = this;
-        contactses = new ArrayList<>();
-        for (int i = 5000; i < 5030; i++) {
-            Contacts contacts = new Contacts();
-            contacts.setName("dmd" + i);
-            contacts.setPhone("1822340" + i);
-            contactses.add(contacts);
-            Log.e(MainActivity.class.getSimpleName(), contacts.getPhone());
-        }
-        tvContact.setText(contactses.size() + "");
+        contactsPresenter = new ContactsPresenterImpl(this);
+        contactsPresenter.loadData();
     }
 
     /**
@@ -93,6 +89,7 @@ public class MainActivity extends BaseActivity {
             // 真正添加
             ContentProviderResult[] results = mContext.getContentResolver()
                     .applyBatch(ContactsContract.AUTHORITY, ops);
+
             // for (ContentProviderResult result : results) {
             // GlobalConstants
             // .PrintLog_D("[GlobalVariables->]BatchAddContact "
@@ -104,17 +101,33 @@ public class MainActivity extends BaseActivity {
     }
 
     public void Synchronization(View view) {
-        showLoading(getString(R.string.synchronization));
+        showProgress();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     BatchAddContact(contactses);
-                    hideLoading();
+                    hideProgress();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void showData(List<Contacts> contacts) {
+        contactses = contacts;
+        tvContact.setText(contacts.size() + "");
+    }
+
+    @Override
+    public void showProgress() {
+        showLoading("同步中,请稍后...");
+    }
+
+    @Override
+    public void hideProgress() {
+        hideLoading();
     }
 }
