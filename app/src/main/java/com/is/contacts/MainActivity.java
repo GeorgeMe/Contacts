@@ -4,40 +4,50 @@ import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.is.contacts.base.BaseActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends BaseActivity {
+    @Bind(R.id.btn_synchronization)
+    Button btnSynchronization;
+    @Bind(R.id.activity_main)
+    RelativeLayout activityMain;
+    @Bind(R.id.tv_contact)
+    TextView tvContact;
     private Context mContext;
     private List<Contacts> contactses;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext=this;
-        contactses=new ArrayList<>();
-        for (int i=5000;i<6000;i++){
-            Contacts contacts=new Contacts();
-            contacts.setName("啊"+i);
-            contacts.setPhone("1822340"+i);
+        ButterKnife.bind(this);
+        mContext = this;
+        contactses = new ArrayList<>();
+        for (int i = 5000; i < 5030; i++) {
+            Contacts contacts = new Contacts();
+            contacts.setName("dmd" + i);
+            contacts.setPhone("1822340" + i);
             contactses.add(contacts);
-            Log.e(MainActivity.class.getSimpleName(),contacts.getPhone());
+            Log.e(MainActivity.class.getSimpleName(), contacts.getPhone());
         }
-        try {
-            BatchAddContact(contactses);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (OperationApplicationException e) {
-            e.printStackTrace();
-        }
+        tvContact.setText(contactses.size() + "");
     }
 
     /**
@@ -46,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
      * @throws OperationApplicationException
      * @throws RemoteException
      */
-    public  void BatchAddContact(List<Contacts> list)
+    public void BatchAddContact(List<Contacts> list)
             throws RemoteException, OperationApplicationException {
         Log.e(MainActivity.class.getSimpleName(), new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()));
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             // 添加姓名
             ops.add(ContentProviderOperation
                     .newInsert(
-                            android.provider.ContactsContract.Data.CONTENT_URI)
+                            ContactsContract.Data.CONTENT_URI)
                     .withValueBackReference(ContactsContract.Contacts.Data.RAW_CONTACT_ID,
                             rawContactInsertIndex)
                     .withValue(ContactsContract.Contacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
@@ -71,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             // 添加号码
             ops.add(ContentProviderOperation
                     .newInsert(
-                            android.provider.ContactsContract.Data.CONTENT_URI)
+                            ContactsContract.Data.CONTENT_URI)
                     .withValueBackReference(ContactsContract.Contacts.Data.RAW_CONTACT_ID,
                             rawContactInsertIndex)
                     .withValue(ContactsContract.Contacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
@@ -90,7 +100,21 @@ public class MainActivity extends AppCompatActivity {
             // }
         }
         Log.e(MainActivity.class.getSimpleName(), new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()));
-        Log.e(MainActivity.class.getSimpleName(),"成功啦");
+        Log.e(MainActivity.class.getSimpleName(), "成功啦");
     }
 
+    public void Synchronization(View view) {
+        showLoading(getString(R.string.synchronization));
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    BatchAddContact(contactses);
+                    hideLoading();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }
