@@ -5,17 +5,39 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.is.contacts.MainActivity">
+    android:background="#f0cc"
+    tools:context="com.is.contacts.ui.activity.MainActivity">
 
-    <Button
+    <com.dd.CircularProgressButton
         android:id="@+id/btn_synchronization"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:onClick="Synchronization" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="186dp"
+        android:onClick="Synchronization"
+        android:textSize="18sp"
+        app:cpb_cornerRadius="20sp" />
+
+    <TextView
+        android:id="@+id/tv_local_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_synchronization"
+        android:layout_marginTop="140dp"
+        android:layout_toLeftOf="@+id/btn_synchronization"
+        android:drawableTop="@drawable/ic_local_contacts"
+        android:gravity="center"
+        android:text="123" />
 
     <TextView
         android:id="@+id/tv_contact"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_synchronization" />
+        android:layout_below="@+id/btn_synchronization"
+        android:layout_marginTop="140dp"
+        android:layout_toRightOf="@+id/btn_synchronization"
+        android:drawableTop="@drawable/ic_cloud"
+        android:gravity="center"
+        android:text="123" />
 </RelativeLayout>

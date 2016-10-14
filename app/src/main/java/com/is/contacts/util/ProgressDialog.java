@@ -1,10 +1,12 @@
-package com.is.contacts;
+package com.is.contacts.util;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.is.contacts.R;
 
 /**
  * Created by Administrator on 2016/10/13 0013.

@@ -1,50 +1,88 @@
-package com.is.contacts;
+package com.is.contacts.ui.activity;
+
 
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
-import android.content.Context;
 import android.content.OperationApplicationException;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dd.CircularProgressButton;
+import com.is.contacts.R;
 import com.is.contacts.base.BaseActivity;
-import com.is.contacts.presenter.ContactsPresenterImpl;
-import com.is.contacts.view.ContactsView;
+import com.is.contacts.entity.Contacts;
+import com.is.contacts.mvp.presenter.ContactsPresenterImpl;
+import com.is.contacts.mvp.view.ContactsView;
+import com.is.ui.eventbus.EventCenter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements ContactsView {
+
     @Bind(R.id.btn_synchronization)
-    Button btnSynchronization;
-    @Bind(R.id.activity_main)
-    RelativeLayout activityMain;
+    CircularProgressButton btnSynchronization;
     @Bind(R.id.tv_contact)
     TextView tvContact;
-    private Context mContext;
+    @Bind(R.id.activity_main)
+    RelativeLayout activityMain;
     private ContactsPresenterImpl contactsPresenter;
     private List<Contacts> contactses;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        mContext = this;
-        contactsPresenter = new ContactsPresenterImpl(this);
-        contactsPresenter.loadData();
+    protected void getBundleExtras(Bundle extras) {
+
     }
+
+    @Override
+    protected int getContentViewLayoutID() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initViewsAndEvents() {
+        contactsPresenter = new ContactsPresenterImpl(mContext, this);
+        contactsPresenter.getContactsList();
+    }
+
+    @Override
+    protected void onEventComming(EventCenter eventCenter) {
+
+    }
+
+    @Override
+    protected boolean isApplyStatusBarTranslucency() {
+        return false;
+    }
+
+    @Override
+    protected boolean isBindEventBusHere() {
+        return false;
+    }
+
+    @Override
+    protected boolean toggleOverridePendingTransition() {
+        return false;
+    }
+
+    @Override
+    protected TransitionMode getOverridePendingTransitionMode() {
+        return null;
+    }
+
+    @Override
+    public void showData(List<Contacts> contacts) {
+        contactses = contacts;
+        tvContact.setText(contacts.size() + "");
+    }
+
 
     /**
      * 批量添加通讯录
@@ -54,7 +92,6 @@ public class MainActivity extends BaseActivity implements ContactsView {
      */
     public void BatchAddContact(List<Contacts> list)
             throws RemoteException, OperationApplicationException {
-        Log.e(MainActivity.class.getSimpleName(), new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()));
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
         int rawContactInsertIndex = 0;
         for (Contacts contact : list) {
@@ -96,38 +133,39 @@ public class MainActivity extends BaseActivity implements ContactsView {
             // + result.uri.toString());
             // }
         }
-        Log.e(MainActivity.class.getSimpleName(), new SimpleDateFormat("yyyyMMddhhmmss").format(new Date()));
         Log.e(MainActivity.class.getSimpleName(), "成功啦");
     }
 
     public void Synchronization(View view) {
-        showProgress();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    BatchAddContact(contactses);
-                    hideProgress();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
+        switch (view.getId()) {
+            case R.id.btn_synchronization:
+                btnSynchronization.setIndeterminateProgressMode(true);
+                Log.i("single", btnSynchronization.getProgress() + "");
+                btnSynchronization.setProgress(50);
+                Log.i("single", btnSynchronization.getProgress() + "");
+                new Thread() {
+                    public void run() {
+                        try {
+                            BatchAddContact(contactses);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        } catch (OperationApplicationException e) {
+                            e.printStackTrace();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                btnSynchronization.setProgress(0);
+                            }
 
-    @Override
-    public void showData(List<Contacts> contacts) {
-        contactses = contacts;
-        tvContact.setText(contacts.size() + "");
-    }
+                        });
+                    }
+                }.start();
+                break;
+            default:
+                break;
 
-    @Override
-    public void showProgress() {
-        showLoading("同步中,请稍后...");
-    }
+        }
 
-    @Override
-    public void hideProgress() {
-        hideLoading();
     }
 }
