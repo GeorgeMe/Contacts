@@ -25,9 +25,9 @@
             android:name="design_height"
             android:value="1280" />
 
-        <activity android:name=".ui.activity.MainActivity">
-
-        </activity>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".ui.activity.LoginActivity"

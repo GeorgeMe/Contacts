@@ -1,6 +1,5 @@
 package com.is.contacts.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -8,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import com.is.contacts.R;
 import com.is.contacts.base.BaseActivity;
@@ -54,8 +52,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     public void onClick(View view) {
-        loginPresenter = new LoginPresenterImpl(mContext, this);
-        loginPresenter.getLogin(userName.getText().toString(), password.getText().toString());
+        login(getUserName(), getPassword());
     }
 
     @Override
@@ -92,13 +89,24 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @Override
-    public void login(LoginResponse loginResponse) {
-        if (loginResponse.getData().equals("登录成功")) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        } else {
-            Toast.makeText(LoginActivity.this, "密码错误", Toast.LENGTH_SHORT).show();
-        }
+    public void login(String userName, String password) {
+        loginPresenter = new LoginPresenterImpl(mContext, this);
+        loginPresenter.getLogin(userName, password);
+    }
+
+    @Override
+    public String getUserName() {
+        return userName.getText().toString();
+    }
+
+    @Override
+    public String getPassword() {
+        return password.getText().toString();
+    }
+
+    @Override
+    public void toMainActivity(LoginResponse loginResponse) {
+        readyGoThenKill(MainActivity.class);
     }
 }
 

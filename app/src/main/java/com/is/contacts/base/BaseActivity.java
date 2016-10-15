@@ -1,12 +1,12 @@
 package com.is.contacts.base;
 
+import android.app.ProgressDialog;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.is.common.StringUtils;
 import com.is.contacts.R;
 import com.is.contacts.mvp.view.BaseView;
-import com.is.contacts.util.ProgressDialog;
 import com.is.ui.base.BaseAppCompatActivity;
 import com.is.ui.netstatus.NetUtils;
 
@@ -63,13 +63,16 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements Base
     public void showLoading(String msg) {
         if (progressDialog == null) {
             if (StringUtils.StringIsEmpty(msg)) {
-                progressDialog = new ProgressDialog(mContext, getString(R.string.loading));
+                progressDialog = new ProgressDialog(mContext);
+                progressDialog.setTitle(msg);
                 progressDialog.show();
             } else {
-                progressDialog = new ProgressDialog(mContext, msg);
+                progressDialog = new ProgressDialog(mContext);
+                progressDialog.setTitle(msg);
                 progressDialog.show();
             }
         } else {
+            progressDialog.setTitle(msg);
             progressDialog.show();
         }
     }

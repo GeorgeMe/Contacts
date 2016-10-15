@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="big_large_text">40px</dimen>
+    <dimen name="large_text">22sp</dimen>
+    <dimen name="big_medium_text">20sp</dimen>
+    <dimen name="medium_text">18sp</dimen>
+    <dimen name="big_small_text">28px</dimen>
+    <dimen name="small_text">14sp</dimen>
+    <dimen name="micro_text">12sp</dimen>
+    <dimen name="tutor_unread_text_size">10sp</dimen>
+
+</resources>

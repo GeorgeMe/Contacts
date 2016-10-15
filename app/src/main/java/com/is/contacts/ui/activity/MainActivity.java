@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,17 +25,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements ContactsView {
 
+
     @Bind(R.id.btn_synchronization)
     CircularProgressButton btnSynchronization;
+    @Bind(R.id.tv_local_contacts)
+    TextView tvLocalContacts;
     @Bind(R.id.tv_contact)
     TextView tvContact;
     @Bind(R.id.activity_main)
     RelativeLayout activityMain;
     private ContactsPresenterImpl contactsPresenter;
-    private List<Contacts> contactses;
+    private List<Contacts> contactses = new ArrayList<>();
 
     @Override
     protected void getBundleExtras(Bundle extras) {
@@ -83,6 +88,19 @@ public class MainActivity extends BaseActivity implements ContactsView {
         tvContact.setText(contacts.size() + "");
     }
 
+    @Override
+    public void exit() {
+        contactsPresenter.exit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            exit();
+            return true;
+        }
+        return true;
+    }
 
     /**
      * 批量添加通讯录
@@ -140,9 +158,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
         switch (view.getId()) {
             case R.id.btn_synchronization:
                 btnSynchronization.setIndeterminateProgressMode(true);
-                Log.i("single", btnSynchronization.getProgress() + "");
                 btnSynchronization.setProgress(50);
-                Log.i("single", btnSynchronization.getProgress() + "");
                 new Thread() {
                     public void run() {
                         try {
@@ -155,7 +171,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                btnSynchronization.setProgress(0);
+                                btnSynchronization.setProgress(100);
                             }
 
                         });
@@ -167,5 +183,12 @@ public class MainActivity extends BaseActivity implements ContactsView {
 
         }
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

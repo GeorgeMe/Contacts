@@ -1,6 +1,7 @@
 package com.is.contacts.mvp.interactor;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.is.contacts.base.Retrofit2See;
 import com.is.contacts.mvp.listener.BaseSingleLoadedListener;
@@ -31,6 +32,7 @@ public class LoginInteractorImpl extends Retrofit2See implements CommonSingleInt
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.i("single", response.code() + "");
                 if (response.body() != null) {
                     loadedListener.onSuccess(response.body());
                 } else {

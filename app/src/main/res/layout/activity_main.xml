@@ -10,14 +10,14 @@
 
     <com.dd.CircularProgressButton
         android:id="@+id/btn_synchronization"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="186dp"
         android:onClick="Synchronization"
-        android:textSize="18sp"
-        app:cpb_cornerRadius="20sp" />
+        app:cpb_cornerRadius="20sp"
+        app:cpb_iconComplete="@drawable/ic_success" />
 
     <TextView
         android:id="@+id/tv_local_contacts"
@@ -40,4 +40,6 @@
         android:drawableTop="@drawable/ic_cloud"
         android:gravity="center"
         android:text="123" />
+
+
 </RelativeLayout>

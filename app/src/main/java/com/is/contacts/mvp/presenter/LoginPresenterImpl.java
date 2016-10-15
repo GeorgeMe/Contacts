@@ -27,6 +27,16 @@ public class LoginPresenterImpl implements BaseSingleLoadedListener<LoginRespons
 
     public void getLogin(String userNanme, String password) {
         loginView.showLoading("登录中...");
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userName", userNanme);
@@ -39,7 +49,13 @@ public class LoginPresenterImpl implements BaseSingleLoadedListener<LoginRespons
 
     @Override
     public void onSuccess(LoginResponse data) {
-        loginView.login(data);
+        if (data != null) {
+            if (data.getData().equals("登录成功")) {
+                loginView.toMainActivity(data);
+            } else {
+                loginView.showError("出错啦");
+            }
+        }
         loginView.hideLoading();
     }
 

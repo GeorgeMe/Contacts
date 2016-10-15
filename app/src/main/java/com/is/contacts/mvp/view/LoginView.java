@@ -7,5 +7,12 @@ import com.is.contacts.protocol.LoginResponse;
  */
 
 public interface LoginView extends BaseView {
-    void login(LoginResponse loginResponse);
+    void login(String userName, String password);
+
+    String getUserName();
+
+    String getPassword();
+
+    void toMainActivity(LoginResponse loginResponse);
+
 }

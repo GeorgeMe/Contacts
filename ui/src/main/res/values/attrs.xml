@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- SwipeBackLayout -->
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_size" format="dimension"/>
+        <attr name="edge_flag">
+            <enum name="left" value="0"/>
+            <enum name="right" value="1"/>
+            <enum name="bottom" value="2"/>
+            <enum name="all" value="3"/>
+        </attr>
+        <attr name="shadow_left" format="reference"/>
+        <attr name="shadow_right" format="reference"/>
+        <attr name="shadow_bottom" format="reference"/>
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference"/>
+
+
+    <declare-styleable name="MaterialTabHost">
+
+        <!-- Custom attributes -->
+        <attr name="hasIcons" format="boolean" />
+        <attr name="materialTabsPrimaryColor" format="color" />
+        <attr name="accentColor" format="color" />
+        <attr name="iconColor" format="color" />
+        <attr name="textColor" format="color"  />
+
+    </declare-styleable>
+
+    <declare-styleable name="RatingView">
+        <attr name="drawable_margin" format="dimension" />
+        <attr name="drawable_size" format="dimension"/>
+        <attr name="max_count" format="integer" />
+        <attr name="rating" format="float" />
+        <attr name="is_indicator" format="boolean" />
+        <attr name="drawable_empty" format="reference" />
+        <attr name="drawable_filled" format="reference" />
+        <attr name="drawable_half" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="MoneyTextView">
+        <attr name="format" format="string"/>
+        <attr name="symbol" format="string"/>
+        <attr name="amount" format="float"/>
+        <attr name="symbolMargin" format="dimension"/>
+        <attr name="decimalMargin" format="dimension"/>
+        <attr name="decimalSeparator" format="string"/>
+
+        <attr name="baseTextSize" format="dimension"/>
+        <attr name="symbolTextSize" format="dimension"/>
+        <attr name="decimalDigitsTextSize" format="dimension"/>
+
+        <attr name="symbolGravity">
+            <flag name="start" value="0x01"/>
+            <flag name="end" value="0x02"/>
+            <flag name="top" value="0x04"/>
+            <flag name="bottom" value="0x08"/>
+        </attr>
+
+        <attr name="decimalGravity" format="enum">
+            <enum name="top" value="4"/>
+            <enum name="bottom" value="8"/>
+        </attr>
+
+        <attr name="gravity">
+            <enum name="left" value="0x01"/>
+            <enum name="right" value="0x02"/>
+            <enum name="top" value="0x04"/>
+            <enum name="bottom" value="0x08"/>
+            <enum name="centerVertical" value="0x16"/>
+            <enum name="centerHorizontal" value="0x32"/>
+            <enum name="center" value="0x48"/>
+        </attr>
+
+        <attr name="baseTextColor" format="color"/>
+        <attr name="symbolTextColor" format="color"/>
+        <attr name="decimalTextColor" format="color"/>
+
+        <attr name="includeDecimalSeparator" format="boolean"/>
+        <attr name="decimalUnderline" format="boolean"/>
+        <attr name="fontPath" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="SlantedTextView">
+        <attr name="slantedTextSize" format="dimension"/>
+        <attr name="slantedBackgroundColor" format="color"/>
+        <attr name="slantedText" format="string"/>
+        <attr name="slantedTextColor" format="color"/>
+        <attr name="slantedLength" format="dimension"/>
+        <attr name="slantedMode" format="enum">
+            <enum name="left" value="0"></enum>
+            <enum name="right" value="1"></enum>
+            <enum name="left_bottom" value="2"></enum>
+            <enum name="right_bottom" value="3"></enum>
+            <enum name="left_triangle" value="4"></enum>
+            <enum name="right_triangle" value="5"></enum>
+            <enum name="left_bottom_triangle" value="6"></enum>
+            <enum name="right_bottom_triangle" value="7"></enum>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="MarqueeViewStyle">
+        <attr name="mvInterval" format="integer|reference"/>
+        <attr name="mvAnimDuration" format="integer|reference"/>
+        <attr name="mvTextSize" format="dimension|reference"/>
+        <attr name="mvTextColor" format="color|reference"/>
+        <attr name="mvSingleLine" format="boolean"/>
+        <attr name="mvGravity">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ReadMoreTextView">
+        <attr name="trimExpandedText" format="string" />
+        <attr name="trimCollapsedText" format="string" />
+        <attr name="trimLength" format="integer" />
+        <attr name="showTrimExpandedText" format="boolean" />
+        <attr name="colorClickableText" format="color" />
+        <attr name="trimLines" format="integer" />
+        <attr name="trimMode">
+            <enum name="trimModeLine" value="0"/>
+            <enum name="trimModeLength" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LoadingBalls">
+        <attr name="balls" format="integer"/>
+        <attr name="movement_cycle_time" format="integer"/>
+        <attr name="size_cycle_time" format="integer"/>
+        <attr name="ball_colors" format="reference"/>
+        <attr name="ball_size" format="dimension"/>
+        <attr name="enable_size_animation" format="boolean"/>
+        <attr name="min_ball_size" format="dimension"/>
+        <attr name="max_ball_size" format="dimension"/>
+        <attr name="path" format="string"/>
+    </declare-styleable>
+
+    <color name="ball1">#FFD91C</color>
+    <color name="ball2">#FF4B4A</color>
+    <color name="ball3">#3D8EFF</color>
+
+    <integer-array name="colors">
+        <item>@color/ball1</item>
+        <item>@color/ball2</item>
+        <item>@color/ball3</item>
+    </integer-array>
+
+    <declare-styleable name="PasswordView">
+        <attr name="strikeThrough" format="boolean"/>
+        <attr name="eyeTint" format="color"/>
+    </declare-styleable>
+</resources>

@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context="com.is.contacts.ui.activity.LoginActivity">
 
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -71,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/shape"
                     android:onClick="onClick"
                     android:text="@string/action_sign_in"
                     android:textStyle="bold" />
