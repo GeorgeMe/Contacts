@@ -1,45 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0cc"
     tools:context="com.is.contacts.ui.activity.MainActivity">
 
-    <com.dd.CircularProgressButton
-        android:id="@+id/btn_synchronization"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="186dp"
-        android:onClick="Synchronization"
-        app:cpb_cornerRadius="20sp"
-        app:cpb_iconComplete="@drawable/ic_success" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_local_contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_synchronization"
-        android:layout_marginTop="140dp"
-        android:layout_toLeftOf="@+id/btn_synchronization"
-        android:drawableTop="@drawable/ic_local_contacts"
-        android:gravity="center"
-        android:text="123" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@color/accent">
 
-    <TextView
-        android:id="@+id/tv_contact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_synchronization"
-        android:layout_marginTop="140dp"
-        android:layout_toRightOf="@+id/btn_synchronization"
-        android:drawableTop="@drawable/ic_cloud"
-        android:gravity="center"
-        android:text="123" />
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_cloud" />
+
+            <TextView
+                android:id="@+id/tv_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="系统中有 1110 学员" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@color/black_p50">
+
+            <TextView
+                android:id="@+id/tv_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="140dp"
+                android:gravity="center"
+                android:text="请点击同步按钮进行同步"
+                android:textColor="@color/accent"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
 
-</RelativeLayout>
+        <com.dd.CircularProgressButton
+            android:id="@+id/btn_synchronization"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:onClick="Synchronization"
+            android:textSize="20sp"
+            app:cpb_colorIndicatorBackground="@android:color/white"
+            app:cpb_colorProgress="@android:color/holo_green_light"
+            app:cpb_cornerRadius="60sp"
+            app:cpb_iconComplete="@drawable/ic_success"
+            app:cpb_textIdle="开始同步" />
+
+    </FrameLayout>
+
+</FrameLayout>

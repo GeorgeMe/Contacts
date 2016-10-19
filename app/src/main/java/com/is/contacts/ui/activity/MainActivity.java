@@ -10,7 +10,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
@@ -30,14 +30,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity implements ContactsView {
 
 
-    @Bind(R.id.btn_synchronization)
-    CircularProgressButton btnSynchronization;
-    @Bind(R.id.tv_local_contacts)
-    TextView tvLocalContacts;
+    @Bind(R.id.img)
+    ImageView img;
     @Bind(R.id.tv_contact)
     TextView tvContact;
-    @Bind(R.id.activity_main)
-    RelativeLayout activityMain;
+    @Bind(R.id.btn_synchronization)
+    CircularProgressButton btnSynchronization;
+    @Bind(R.id.tv_info)
+    TextView tvInfo;
     private ContactsPresenterImpl contactsPresenter;
     private List<Contacts> contactses = new ArrayList<>();
 
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
     @Override
     public void showData(List<Contacts> contacts) {
         contactses = contacts;
-        tvContact.setText(contacts.size() + "");
+        tvContact.setText("系统中有 " + contacts.size() + " 位学员");
     }
 
     @Override
@@ -158,7 +158,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
         switch (view.getId()) {
             case R.id.btn_synchronization:
                 btnSynchronization.setIndeterminateProgressMode(true);
-                btnSynchronization.setProgress(50);
+                btnSynchronization.setProgress(1);
                 new Thread() {
                     public void run() {
                         try {
@@ -172,6 +172,8 @@ public class MainActivity extends BaseActivity implements ContactsView {
                             @Override
                             public void run() {
                                 btnSynchronization.setProgress(100);
+                                tvInfo.setText("同步完成");
+                                btnSynchronization.setClickable(false);
                             }
 
                         });

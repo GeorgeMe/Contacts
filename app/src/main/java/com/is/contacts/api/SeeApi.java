@@ -17,5 +17,5 @@ public interface SeeApi {
     Call<ContactsResponse> getContactsList();
 
     @POST("login")
-    Call<LoginResponse> login(@Query("userName") String userName, @Query("password") String password);
+    Call<LoginResponse> login(@Query("username") String userName, @Query("password") String password);
 }
