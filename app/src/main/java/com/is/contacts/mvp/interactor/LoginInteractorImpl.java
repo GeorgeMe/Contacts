@@ -33,7 +33,6 @@ public class LoginInteractorImpl extends Retrofit2See implements CommonSingleInt
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.i("single", response.code() + "");
-                Log.i("single", response.code() + response.body().getData());
                 if (response.body() != null) {
                     loadedListener.onSuccess(response.body());
                 } else {

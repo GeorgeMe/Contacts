@@ -15,14 +15,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:background="@color/accent">
+            android:layout_weight="0.5">
 
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerInParent="true"
+                android:onClick="Synchronization"
                 android:src="@drawable/ic_cloud" />
 
             <TextView
@@ -38,8 +38,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:background="@color/black_p50">
+            android:background="#000"
+            android:layout_weight="0.5">
 
             <TextView
                 android:id="@+id/tv_info"

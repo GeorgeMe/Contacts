@@ -3,7 +3,9 @@ package com.is.contacts.ui.activity;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
+import android.content.Context;
 import android.content.OperationApplicationException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
@@ -17,11 +19,15 @@ import com.dd.CircularProgressButton;
 import com.is.contacts.R;
 import com.is.contacts.base.BaseActivity;
 import com.is.contacts.entity.Contacts;
+import com.is.contacts.helper.DBOpenHelper;
 import com.is.contacts.mvp.presenter.ContactsPresenterImpl;
 import com.is.contacts.mvp.view.ContactsView;
+import com.is.contacts.uitl.DatabaseUtil;
 import com.is.ui.eventbus.EventCenter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,7 +45,12 @@ public class MainActivity extends BaseActivity implements ContactsView {
     @Bind(R.id.tv_info)
     TextView tvInfo;
     private ContactsPresenterImpl contactsPresenter;
+    private Context mContext;
     private List<Contacts> contactses = new ArrayList<>();
+    private DBOpenHelper dbOpenHelper;
+    private SQLiteDatabase db;
+    private String DATABASENAME = "my.db";
+    private String TABLENAME = "record";
 
     @Override
     protected void getBundleExtras(Bundle extras) {
@@ -55,6 +66,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
     protected void initViewsAndEvents() {
         contactsPresenter = new ContactsPresenterImpl(mContext, this);
         contactsPresenter.getContactsList();
+        dbOpenHelper = new DBOpenHelper(mContext, DATABASENAME, null, 1);
     }
 
     @Override
@@ -111,6 +123,10 @@ public class MainActivity extends BaseActivity implements ContactsView {
     public void BatchAddContact(List<Contacts> list)
             throws RemoteException, OperationApplicationException {
         ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
+        //获取系统时间
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss");
+        Date curDate = new Date(System.currentTimeMillis());
+        String systime = formatter.format(curDate);
         int rawContactInsertIndex = 0;
         for (Contacts contact : list) {
             rawContactInsertIndex = ops.size(); // 有了它才能给真正的实现批量添加
@@ -151,7 +167,22 @@ public class MainActivity extends BaseActivity implements ContactsView {
             // + result.uri.toString());
             // }
         }
+        Insert(systime, list.size() + "");
+
         Log.e(MainActivity.class.getSimpleName(), "成功啦");
+    }
+
+    /**
+     * 添加数据到数据库
+     *
+     * @param time  同步时间
+     * @param count 同步条数
+     */
+    public void Insert(String time, String count) {
+        DatabaseUtil dbUtil = new DatabaseUtil(this);
+        dbUtil.open();
+        dbUtil.insert(time, count);
+        dbUtil.close();
     }
 
     public void Synchronization(View view) {
@@ -179,6 +210,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
                         });
                     }
                 }.start();
+                readyGo(TestActivity.class);
                 break;
             default:
                 break;
@@ -192,5 +224,6 @@ public class MainActivity extends BaseActivity implements ContactsView {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        mContext = MainActivity.this;
     }
 }
