@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.holidaycheck.permissify.PermissifyActivity;
 import com.is.common.SmartBarUtils;
 import com.is.ui.R;
 import com.is.ui.eventbus.BusHelper;
@@ -19,12 +20,11 @@ import com.is.ui.netstatus.NetChangeObserver;
 import com.is.ui.netstatus.NetStateReceiver;
 import com.is.ui.netstatus.NetUtils;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import butterknife.ButterKnife;
 
 
-public abstract class BaseAppCompatActivity extends AutoLayoutActivity {
+public abstract class BaseAppCompatActivity extends PermissifyActivity {
 
     /**
      * Log tag

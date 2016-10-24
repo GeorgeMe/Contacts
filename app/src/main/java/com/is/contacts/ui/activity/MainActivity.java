@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
+import com.holidaycheck.permissify.PermissionCallOptions;
 import com.is.contacts.R;
 import com.is.contacts.base.BaseActivity;
 import com.is.contacts.entity.Contacts;
@@ -56,6 +56,11 @@ public class MainActivity extends BaseActivity implements ContactsView {
     protected void initViewsAndEvents() {
         contactsPresenter = new ContactsPresenterImpl(mContext, this);
         contactsPresenter.getContactsList();
+        getPermissifyManager().callWithPermission(this, REQUEST_CODE_ASK_WRITE_CONTACTS, Manifest.permission.READ_CONTACTS,
+                new PermissionCallOptions.Builder()
+                        .withDefaultDenyDialog(false)
+                        .withRationaleEnabled(false)
+                        .build());
     }
 
     @Override
@@ -156,7 +161,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
             // + result.uri.toString());
             // }
         }
-        Insert(systime, String.valueOf(list.size()));
+//        Insert(systime, String.valueOf(list.size()));
         Log.e(MainActivity.class.getSimpleName(), "成功啦");
     }
 
@@ -167,10 +172,9 @@ public class MainActivity extends BaseActivity implements ContactsView {
      * @param count 同步条数
      */
     public void Insert(String time, String count) {
-        DatabaseUtil dbUtil = new DatabaseUtil(this);
+        DatabaseUtil dbUtil = new DatabaseUtil(mContext);
         dbUtil.open();
         dbUtil.insert(time, count);
-        Log.i("single", time);
         dbUtil.close();
     }
 
@@ -186,24 +190,13 @@ public class MainActivity extends BaseActivity implements ContactsView {
                 btnSynchronization.setProgress(1);
                 new Thread() {
                     public void run() {
-                        requestPermission(REQUEST_CODE_ASK_WRITE_CONTACTS, Manifest.permission.WRITE_CONTACTS, new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    BatchAddContact(contactses);
-                                } catch (RemoteException e) {
-                                    e.printStackTrace();
-                                } catch (OperationApplicationException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this, "Contact Denied", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        });
+                        try {
+                            BatchAddContact(contactses);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        } catch (OperationApplicationException e) {
+                            e.printStackTrace();
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -7,10 +7,14 @@
     android:orientation="vertical"
     tools:context="com.is.contacts.ui.activity.SuccessActivity">
 
-    <ImageView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/bg_login" />
+        android:background="@drawable/bg_login"
+        android:gravity="bottom|center"
+        android:paddingBottom="20dp"
+        android:text="同步完成"
+        android:textSize="@dimen/sp_16" />
 
     <ExpandableListView
         android:id="@+id/expandableListView"
@@ -19,10 +23,4 @@
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:gravity="center" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="返回" />
-
 </LinearLayout>

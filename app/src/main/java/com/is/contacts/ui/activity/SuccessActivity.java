@@ -77,7 +77,7 @@ public class SuccessActivity extends BaseActivity {
     }
 
     public void query() {
-        DatabaseUtil dbUtil = new DatabaseUtil(this);
+        DatabaseUtil dbUtil = new DatabaseUtil(mContext);
         dbUtil.open();
         Cursor cursor = dbUtil.fetchAll();
         if (cursor != null) {

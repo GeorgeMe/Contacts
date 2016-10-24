@@ -59,7 +59,6 @@ public class DatabaseUtil {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.i(TAG, "Creating DataBase:" + CREATE_RECORD_TABLE);
             db.execSQL(CREATE_RECORD_TABLE);
         }
 
