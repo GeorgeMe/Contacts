@@ -16,7 +16,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class TestActivity extends BaseActivity {
+public class SuccessActivity extends BaseActivity {
     @Bind(R.id.expandableListView)
     ExpandableListView expandableListView;
     @Bind(R.id.activity_test)
@@ -32,7 +32,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_test;
+        return R.layout.activity_success;
     }
 
     @Override
@@ -42,13 +42,13 @@ public class TestActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
-        mContext = TestActivity.this;
+        mContext = SuccessActivity.this;
         groupArray = new ArrayList<String>();
         childArray = new ArrayList<List<String>>();
         childItem = new ArrayList<String>();
         query();
         initdate();
-        expandableListView.setAdapter(new ExpandableListViewaAdapter(TestActivity.this, groupArray, childArray));
+        expandableListView.setAdapter(new ExpandableListViewaAdapter(SuccessActivity.this, groupArray, childArray));
     }
 
     @Override

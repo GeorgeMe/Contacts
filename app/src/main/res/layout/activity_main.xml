@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/bg_login"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -17,39 +18,30 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5">
 
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
-                android:onClick="Synchronization"
-                android:src="@drawable/ic_cloud" />
-
             <TextView
                 android:id="@+id/tv_contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/img"
+                android:layout_width="240dp"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="系统中有 1110 学员" />
+                android:text="系统中有 1110 学员"
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#000"
             android:layout_weight="0.5">
 
             <TextView
                 android:id="@+id/tv_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="140dp"
+                android:layout_width="240dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="200dp"
                 android:gravity="center"
                 android:text="请点击同步按钮进行同步"
-                android:textColor="@color/accent"
                 android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
@@ -73,6 +65,7 @@
             app:cpb_colorProgress="@android:color/holo_green_light"
             app:cpb_cornerRadius="60sp"
             app:cpb_iconComplete="@drawable/ic_success"
+            app:cpb_selectorIdle="@color/cpb_white"
             app:cpb_textIdle="开始同步" />
 
     </FrameLayout>

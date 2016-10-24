@@ -1,25 +1,23 @@
 package com.is.contacts.ui.activity;
 
 
+import android.Manifest;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
-import android.content.Context;
 import android.content.OperationApplicationException;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.is.contacts.R;
 import com.is.contacts.base.BaseActivity;
 import com.is.contacts.entity.Contacts;
-import com.is.contacts.helper.DBOpenHelper;
 import com.is.contacts.mvp.presenter.ContactsPresenterImpl;
 import com.is.contacts.mvp.view.ContactsView;
 import com.is.contacts.uitl.DatabaseUtil;
@@ -31,13 +29,9 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements ContactsView {
 
-
-    @Bind(R.id.img)
-    ImageView img;
     @Bind(R.id.tv_contact)
     TextView tvContact;
     @Bind(R.id.btn_synchronization)
@@ -45,12 +39,8 @@ public class MainActivity extends BaseActivity implements ContactsView {
     @Bind(R.id.tv_info)
     TextView tvInfo;
     private ContactsPresenterImpl contactsPresenter;
-    private Context mContext;
     private List<Contacts> contactses = new ArrayList<>();
-    private DBOpenHelper dbOpenHelper;
-    private SQLiteDatabase db;
-    private String DATABASENAME = "my.db";
-    private String TABLENAME = "record";
+    final public static int REQUEST_CODE_ASK_WRITE_CONTACTS = 123;
 
     @Override
     protected void getBundleExtras(Bundle extras) {
@@ -66,7 +56,6 @@ public class MainActivity extends BaseActivity implements ContactsView {
     protected void initViewsAndEvents() {
         contactsPresenter = new ContactsPresenterImpl(mContext, this);
         contactsPresenter.getContactsList();
-        dbOpenHelper = new DBOpenHelper(mContext, DATABASENAME, null, 1);
     }
 
     @Override
@@ -167,8 +156,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
             // + result.uri.toString());
             // }
         }
-        Insert(systime, list.size() + "");
-
+        Insert(systime, String.valueOf(list.size()));
         Log.e(MainActivity.class.getSimpleName(), "成功啦");
     }
 
@@ -182,9 +170,15 @@ public class MainActivity extends BaseActivity implements ContactsView {
         DatabaseUtil dbUtil = new DatabaseUtil(this);
         dbUtil.open();
         dbUtil.insert(time, count);
+        Log.i("single", time);
         dbUtil.close();
     }
 
+    /**
+     * 点击按钮进行同步
+     *
+     * @param view
+     */
     public void Synchronization(View view) {
         switch (view.getId()) {
             case R.id.btn_synchronization:
@@ -192,13 +186,24 @@ public class MainActivity extends BaseActivity implements ContactsView {
                 btnSynchronization.setProgress(1);
                 new Thread() {
                     public void run() {
-                        try {
-                            BatchAddContact(contactses);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        } catch (OperationApplicationException e) {
-                            e.printStackTrace();
-                        }
+                        requestPermission(REQUEST_CODE_ASK_WRITE_CONTACTS, Manifest.permission.WRITE_CONTACTS, new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    BatchAddContact(contactses);
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                } catch (OperationApplicationException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Contact Denied", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        });
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -210,20 +215,12 @@ public class MainActivity extends BaseActivity implements ContactsView {
                         });
                     }
                 }.start();
-                readyGo(TestActivity.class);
+                readyGo(SuccessActivity.class);
                 break;
             default:
                 break;
 
         }
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-        mContext = MainActivity.this;
     }
 }

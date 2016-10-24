@@ -6,7 +6,7 @@
     <!-- Strings related to login -->
     <string name="prompt_userName">用 户 名</string>
     <string name="prompt_password">密   码</string>
-    <string name="action_sign_in">登  录</string>
+    <string name="action_sign_in">登    录</string>
     <string name="action_sign_in_short">登录</string>
     <string name="Complete">complete</string>
     <string name="Error">error</string>

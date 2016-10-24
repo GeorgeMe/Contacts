@@ -52,8 +52,8 @@ public class DatabaseUtil {
     /**
      * Inner private class. Database Helper class for creating and updating database.
      */
-    private static class DatabaseHelper extends SQLiteOpenHelper {
-        DatabaseHelper(Context context) {
+    public static class DatabaseHelper extends SQLiteOpenHelper {
+        public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
@@ -105,14 +105,12 @@ public class DatabaseUtil {
     /**
      * This method is used to create/insert new   record.
      *
-     * @param name
-     * @param grade
      * @return long
      */
-    public long insert(String name, String grade) {
+    public long insert(String time, String count) {
         ContentValues initialValues = new ContentValues();
-        initialValues.put(KEY_NAME, name);
-        initialValues.put(KEY_COUNT, grade);
+        initialValues.put(KEY_NAME, time);
+        initialValues.put(KEY_COUNT, count);
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
