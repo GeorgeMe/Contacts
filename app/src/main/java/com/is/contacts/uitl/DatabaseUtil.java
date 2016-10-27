@@ -39,7 +39,7 @@ public class DatabaseUtil {
      */
     private static final String CREATE_RECORD_TABLE =
             "create table " + DATABASE_TABLE + "(" + KEY_ROWID + " integer primary key autoincrement,"
-                    + KEY_NAME + "text," + KEY_COUNT + "text);";
+                    + KEY_NAME + " text," + KEY_COUNT + " text);";
 
     /**
      * Context
@@ -129,7 +129,7 @@ public class DatabaseUtil {
      * @return Cursor
      */
     public Cursor fetchAll() {
-        return mDb.query(DATABASE_TABLE, null, null, null, null, null, null);
+        return mDb.query(DATABASE_TABLE, null, null, null, null, null, KEY_NAME);
     }
 
     /**

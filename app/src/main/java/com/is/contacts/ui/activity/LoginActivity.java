@@ -1,7 +1,6 @@
 package com.is.contacts.ui.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +15,7 @@ import com.is.contacts.protocol.LoginResponse;
 import com.is.ui.eventbus.EventCenter;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,7 +50,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     }
 
-    public void onClick(View view) {
+    @OnClick(R.id.btn_login)
+    public void onClick() {
         login(getUserName(), getPassword());
     }
 
@@ -79,13 +79,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     protected TransitionMode getOverridePendingTransitionMode() {
         return null;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     @Override

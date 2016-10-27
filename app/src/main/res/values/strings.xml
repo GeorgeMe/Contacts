@@ -13,13 +13,8 @@
     <string name="Upload">load</string>
 
     <!-- permission-->
-    <string name="permission_status_granted">Granted</string>
-    <string name="permission_status_unknown">Unknown</string>
-    <string name="permission_status_denied_once">Denied Once</string>
-    <string name="permission_status_denied_forever">Denied Forever</string>
-    <string name="permission_status_rationale">Show Rationale</string>
     <string name="contact_rationale">该应用申请读取联系人？</string>
     <string name="contact_deny_dialog">没有读取联系人权限</string>
-    <string name="camera_rationale">Wee need camera permission to take a picture of your swimming pool</string>
-    <string name="camera_deny_dialog">Without camera permission swimming pool selfies are disabled</string>
+    <string name="internet_rationale">允许程序访问有关GSM网络信息？</string>
+    <string name="internet_deny_dialog">没有网络请求权限</string>
 </resources>

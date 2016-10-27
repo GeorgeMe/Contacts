@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.holidaycheck.permissify.PermissifyActivity;
 import com.is.common.SmartBarUtils;
 import com.is.ui.R;
 import com.is.ui.eventbus.BusHelper;
@@ -24,7 +24,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import butterknife.ButterKnife;
 
 
-public abstract class BaseAppCompatActivity extends PermissifyActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * Log tag

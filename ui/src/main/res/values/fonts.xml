@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="big_large_text">40px</dimen>
+    <dimen name="big_large_text">40sp</dimen>
     <dimen name="large_text">22sp</dimen>
     <dimen name="big_medium_text">20sp</dimen>
     <dimen name="medium_text">18sp</dimen>
