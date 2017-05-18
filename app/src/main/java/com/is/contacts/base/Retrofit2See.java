@@ -4,33 +4,25 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
-
 import com.is.common.TLog;
 import com.is.common.XmlDB;
 import com.is.contacts.SeeConstant;
 import com.is.contacts.api.SeeApi;
+import okhttp3.*;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Cache;
-import okhttp3.CacheControl;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Administrator on 2016/10/14 0014.
  */
 
 public class Retrofit2See {
-    protected String baseUrl = "http://192.168.0.111:8080/main/";
+    protected String baseUrl = "http://www.1drivers.net/";
+    //protected String baseUrl = "http://192.168.0.116:8080/driver-admin/";
     protected Retrofit retrofit;
     protected SeeApi seeApi;
     private static Context mContext = null;
@@ -42,7 +34,7 @@ public class Retrofit2See {
             /**
              * 设置Cookie
              */
-            builder.addInterceptor(addCookieInterceptor());
+            //builder.addInterceptor(addCookieInterceptor());
             /**
              * 设置头
              */
@@ -51,10 +43,10 @@ public class Retrofit2See {
              * 设置公共参数
              */
             builder.addInterceptor(addQueryParameterInterceptor());
+
             /**
              * 设置缓存
              */
-
             File cacheFile = new File(mContext.getExternalCacheDir(), "RetrofitCache");
             Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
             builder.cache(cache).addInterceptor(addCacheInterceptor());
@@ -62,9 +54,9 @@ public class Retrofit2See {
             /**
              * 设置超时
              */
-            builder.connectTimeout(5, TimeUnit.SECONDS);
+            /*builder.connectTimeout(5, TimeUnit.SECONDS);
             builder.readTimeout(20, TimeUnit.SECONDS);
-            builder.writeTimeout(20, TimeUnit.SECONDS);
+            builder.writeTimeout(20, TimeUnit.SECONDS);*/
             /**
              * 错误重连
              */
@@ -85,6 +77,8 @@ public class Retrofit2See {
 
     /**
      * 设置Cookie
+     * 导致请求执行了两次
+     * 2017-5-18发现
      */
     private static Interceptor addCookieInterceptor() {
         Interceptor cookieInterceptor = new Interceptor() {

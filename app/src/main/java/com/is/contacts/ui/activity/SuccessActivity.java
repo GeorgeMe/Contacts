@@ -46,6 +46,7 @@ public class SuccessActivity extends BaseActivity {
 
     @Override
     protected void initViewsAndEvents() {
+        layoutInflater = LayoutInflater.from(mContext);
         timeItem = new ArrayList<String>();
         countItem = new ArrayList<String>();
         header = layoutInflater.inflate(R.layout.listview_head, null);

@@ -24,7 +24,6 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:text="系统中有 1110 学员"
                 android:textSize="16sp" />
         </RelativeLayout>
 

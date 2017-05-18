@@ -2,6 +2,7 @@ package com.is.contacts.mvp.interactor;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.is.contacts.base.Retrofit2See;
 import com.is.contacts.mvp.listener.BaseSingleLoadedListener;
@@ -28,10 +29,12 @@ public class ContactsInteractorImpl extends Retrofit2See implements CommonListIn
 
     @Override
     public void getCommonListData(JSONObject json) {
-        Call<ContactsResponse> call = seeApi.getContactsList();
+        Call<ContactsResponse> call = seeApi.getContactsList(json.toString());
+
         call.enqueue(new Callback<ContactsResponse>() {
             @Override
             public void onResponse(Call<ContactsResponse> call, Response<ContactsResponse> response) {
+
                 if (response.body() != null) {
                     loadedListener.onSuccess(response.body());
                 } else
@@ -40,6 +43,7 @@ public class ContactsInteractorImpl extends Retrofit2See implements CommonListIn
 
             @Override
             public void onFailure(Call<ContactsResponse> call, Throwable t) {
+
                 loadedListener.onFailure("Disconnext");
             }
         });

@@ -13,9 +13,10 @@ import retrofit2.http.Query;
  */
 
 public interface SeeApi {
-    @GET("contacts")
-    Call<ContactsResponse> getContactsList();
+    @GET("api/contacts/getAllContacts")
+    Call<ContactsResponse> getContactsList(@Query("json") String json);
 
-    @POST("login")
-    Call<LoginResponse> login(@Query("username") String userName, @Query("password") String password);
+    @POST("api/driver/login/login")
+    Call<LoginResponse> login(@Query("json") String json);
+    //@Query("username") String userName, @Query("password") String password
 }

@@ -1,6 +1,7 @@
 package com.is.contacts.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,8 +52,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
     }
 
     @OnClick(R.id.btn_login)
-    public void onClick() {
-        login(getUserName(), getPassword());
+    public void OnClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_login:
+                if( getUserName() == null||getPassword()==null){
+                    showToast("不能为空");
+                }else{
+                    login(getUserName(), getPassword());
+                }
+                break;
+        }
+
     }
 
     @Override
@@ -99,7 +109,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void toMainActivity(LoginResponse loginResponse) {
-        readyGoThenKill(MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId",loginResponse.getData().getId());
+        readyGoThenKill(MainActivity.class,bundle);
     }
 }
 

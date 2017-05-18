@@ -28,7 +28,7 @@ public class LoginInteractorImpl extends Retrofit2See implements CommonSingleInt
 
     @Override
     public void getCommonSingleData(JSONObject json) {
-        Call<LoginResponse> call = seeApi.login(json.optString("userName"), json.optString("password"));
+        Call<LoginResponse> call = seeApi.login(json.toString());
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

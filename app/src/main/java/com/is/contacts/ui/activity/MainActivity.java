@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 import android.provider.ContactsContract.RawContacts;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.is.contacts.base.BaseActivity;
 import com.is.contacts.entity.Contacts;
 import com.is.contacts.mvp.presenter.ContactsPresenterImpl;
 import com.is.contacts.mvp.view.ContactsView;
+import com.is.contacts.protocol.ContactsResponse;
 import com.is.contacts.uitl.DatabaseUtil;
 import com.is.contacts.uitl.TimeUtil;
 import com.is.ui.eventbus.EventCenter;
@@ -95,10 +97,10 @@ public class MainActivity extends BaseActivity implements ContactsView {
             handler.sendMessage(message);
         }
     };
-
+    private int userId;
     @Override
     protected void getBundleExtras(Bundle extras) {
-
+        userId = extras.getInt("userId");
     }
 
     @Override
@@ -112,7 +114,7 @@ public class MainActivity extends BaseActivity implements ContactsView {
         tvBeginTime.setVisibility(View.INVISIBLE);
         tvPostTime.setVisibility(View.INVISIBLE);
         contactsPresenter = new ContactsPresenterImpl(mContext, this);
-        contactsPresenter.getContactsList();
+        contactsPresenter.getContactsList(userId);
     }
 
     @Override
@@ -141,9 +143,12 @@ public class MainActivity extends BaseActivity implements ContactsView {
     }
 
     @Override
-    public void showData(List<Contacts> contacts) {
-        contactses = contacts;
-        tvContact.setText("系统中有 " + contacts.size() + " 位学员");
+    public void showData(ContactsResponse contacts) {
+        contactses = contacts.getData();
+        //contactses = contacts;
+        //tvContact.setText("系统中有 " + contacts.size() + " 位学员");
+        tvContact.setText(contacts.getTipMsg());
+        Log.d("contacts", contacts.getTipMsg());
     }
 
     @Override
@@ -311,5 +316,9 @@ public class MainActivity extends BaseActivity implements ContactsView {
         }.start();
     }
 
-
+    @Override
+    public void showNo() {
+        btnSynchronization.setEnabled(false);
+        showToast("没有要同步的数据,按钮已禁用");
+    }
 }

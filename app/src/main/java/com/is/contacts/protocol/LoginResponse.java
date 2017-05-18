@@ -16,7 +16,7 @@ public class LoginResponse {
     private String status;
     private String tipCode;
     private String tipMsg;
-    private String data;
+    private DataBean data;
 
     public String getStatus() {
         return status;
@@ -42,11 +42,36 @@ public class LoginResponse {
         this.tipMsg = tipMsg;
     }
 
-    public String getData() {
+    public DataBean getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(DataBean data) {
         this.data = data;
+    }
+    public static class DataBean {
+        /**
+         * id : 1
+         * status : staff
+         */
+
+        private int id;
+        private String status;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
     }
 }

@@ -7,7 +7,7 @@ package com.is.contacts.entity;
 public class Contacts {
     private int id;
     private String name;
-    private String phone;
+    private String mobile;
 
     public int getId() {
         return id;
@@ -26,10 +26,10 @@ public class Contacts {
     }
 
     public String getPhone() {
-        return phone;
+        return mobile;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.mobile = phone;
     }
 }

@@ -1,6 +1,7 @@
 package com.is.contacts.mvp.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.is.contacts.mvp.interactor.LoginInteractorImpl;
 import com.is.contacts.mvp.listener.BaseSingleLoadedListener;
@@ -49,8 +50,9 @@ public class LoginPresenterImpl implements BaseSingleLoadedListener<LoginRespons
 
     @Override
     public void onSuccess(LoginResponse data) {
+        Log.d("onsuccess", "onSuccess: "+data.toString());
         if (data != null) {
-            if (data.getData().equals("登录成功")) {
+            if (data.getStatus().equals("success")) {
                 loginView.toMainActivity(data);
             } else {
                 loginView.showError("出错啦");
